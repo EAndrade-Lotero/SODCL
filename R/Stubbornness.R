@@ -1,4 +1,3 @@
-library(sjPlot)
 library(sjmisc)
 library(ggplot2)
 
