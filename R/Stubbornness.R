@@ -12,7 +12,7 @@ summary(model4h) # => Positive correlation is significant
 
 g3 <- ggplot(df1, aes(Similarity_LAG1, Consistency)) +
   geom_point(alpha = 1/8) +
-  xlab("Log of max similarity w.r.t.\nfocal regions on Round n-1") +
+  xlab("Max similarity w.r.t.\nfocal regions on Round n-1") +
   ylab("Consistency on Round n") +
   geom_smooth(method = lm)
 
