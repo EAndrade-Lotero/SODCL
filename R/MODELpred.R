@@ -409,9 +409,9 @@ get_FRASims <- function(df) {
 
 get_FRASims_list <- function(df) {
   
-  aux <- get_FRASims(args)
+  aux <- get_FRASims(df)
   
-  aux$FRASims <- mapply(function(x1,x2,x3,x4,x5,x6,x7,x8) as.list(data.frame(c(x1,x2,x3,x4,x5,x6,x7,x8))),
+  aux$MaxFRASim <- mapply(function(x1,x2,x3,x4,x5,x6,x7,x8) as.list(data.frame(c(x1,x2,x3,x4,x5,x6,x7,x8))),
                         aux$FRASimALL, 
                         aux$FRASimNOTHING, 
                         aux$FRASimBOTTOM, 
@@ -440,6 +440,56 @@ get_FRASims_list <- function(df) {
   
 } # end get_FRASims_list
 
+get_max_FRASim <- function(df) {
+  
+  aux <- get_FRASims(df)
+  
+  aux$MaxFRASim <- mapply(function(x1,x2,x3,x4,x5,x6,x7,x8) round(max(as.vector(data.frame(c(x1,x2,x3,x4,x5,x6,x7,x8)))),1),
+                          aux$FRASimALL, 
+                          aux$FRASimNOTHING, 
+                          aux$FRASimBOTTOM, 
+                          aux$FRASimTOP, 
+                          aux$FRASimLEFT, 
+                          aux$FRASimRIGHT, 
+                          aux$FRASimIN, 
+                          aux$FRASimOUT
+  )
+  
+  aux <- aux %>% select(Region, Score, MaxFRASim, RegionGo)
+  
+  } # end get_max_FRASim
+
+
+getRelFreq_FRA <- function(df) {
+  
+  df <- find_joint_region(df)
+  df <- get_max_FRASim(df)
+  df <- df[complete.cases(df$RegionGo), ]
+  df$Region <- apply(df, 1, function(x) {
+    if (x['Region']!='RS') {
+      return('Focal')
+    } else {
+      return('RS')
+    }
+  })
+  df$RegionGo <- apply(df, 1, function(x) {
+    if (x['RegionGo']!='RS') {
+      return('Focal')
+    } else {
+      return('RS')
+    }
+  })
+  df <- df[df$RegionGo != "", ]
+  df <- df %>% select('Region', 'Score', 'MaxFRASim', 'RegionGo')
+  df <- df %>%
+    dplyr::group_by(Region, Score, MaxFRASim, RegionGo) %>%
+    dplyr::summarize(n = n()) %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(Region, Score, MaxFRASim) %>%
+    dplyr::mutate(n1 = sum(n),
+                  Freqs = n/n1)
+  return(df[c('Region', 'Score', 'MaxFRASim', 'RegionGo', 'Freqs')])
+} # end getRelFreq_FRA
 
 getFreq_based_on_FRASim <- function(df, k) {
   
@@ -1054,9 +1104,145 @@ ModelProb <- function(regionFrom, regionGo, s, k, theta){
   return(probab)
 } # end ModelProb
 
+FRAprob_Focal <- function(score, frasim, theta){
+  wAll <- theta[1]
+  wNoth <- theta[2]
+  wLef <- theta[3]
+  wIn <- theta[4]
+  alpha <- theta[5]
+  beta <- theta[6]
+  gamma <- theta[7]
+  delta <- theta[8]
+  epsilon <- theta[9]
+  zeta <- theta[10]
+  # Start from mean bias
+  aux <- mean(c(wAll, wNoth, wLef, wIn))
+  # Add attractiveness according to WSLS
+  attractiveness <- alpha * sigmoid(score, beta, gamma)
+  # Add attractiveness according to FRAsim
+  attractiveness <- attractiveness + delta * sigmoid(frasim, epsilon, zeta) 
+  prob <- (aux + attractiveness) / (1 + attractiveness)
+  return(prob)
+}
+
+FRAprob_RS <- function(score, frasim, theta){
+  print(theta)
+  wAll <- theta[1]
+  wNoth <- theta[2]
+  wLef <- theta[3]
+  wIn <- theta[4]
+  alpha <- theta[5]
+  beta <- theta[6]
+  gamma <- theta[7]
+  delta <- theta[8]
+  epsilon <- theta[9]
+  zeta <- theta[10]
+  # Start from mean bias
+  aux <- mean(c(wAll, wNoth, wLef, wIn))
+  # Add attractiveness according to FRAsim
+  attractiveness <- delta * sigmoid(frasim, epsilon, zeta) 
+  prob <- (aux + attractiveness) / (1 + attractiveness)
+  return(prob)
+}
+
 ############################
 # WSLS related functions
 ############################
+
+getRelFreq_Rows <- function(df) {
+  # Obtains the relative frequencies for transition from region i and score s to region k
+  # Input: k, the region the player is going to
+  #        df, the dataframe from which the observations are obtained
+  # Output: Relative frequency
+  df <- df[complete.cases(df), ]
+  df$Region <- df$Category
+  df <- df[df$RegionGo != "", ]
+  df <- df %>% select('Region', 'Score', 'RegionGo')
+  df <- df %>%
+    dplyr::group_by(Region, Score, RegionGo) %>%
+    dplyr::summarize(n = n()) %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(Region, Score) %>%
+    dplyr::mutate(n1 = sum(n),
+                  Freqs = n/n1)
+  return(df[c('Region', 'Score', 'RegionGo', 'Freqs')])
+}
+
+getRelFreq_WSLS <- function(df) {
+  # Obtains the relative frequencies for transition from focal region 
+  # and score s to same focal region
+  # Input: df, the dataframe from which the observations are obtained
+  df <- df[complete.cases(df), ]
+  df$Region <- df$Category
+  #  df <- df[df['Region']==df['RegionGo'], ]
+  df$Region <- apply(df, 1, function(x) {
+    if (x['Region']!='RS') {
+      return('Focal')
+    } else {
+      return('RS')
+    }
+  })
+  df$RegionGo <- apply(df, 1, function(x) {
+    if (x['RegionGo']!='RS') {
+      return('Focal')
+    } else {
+      return('RS')
+    }
+  })
+  df <- df[df$RegionGo != "", ]
+  df <- df %>% select('Region', 'Score', 'RegionGo')
+  df <- df %>%
+    dplyr::group_by(Region, Score, RegionGo) %>%
+    dplyr::summarize(n = n()) %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(Region, Score) %>%
+    dplyr::mutate(n1 = sum(n),
+                  Freqs = n/n1)
+  return(df[c('Region', 'Score', 'RegionGo', 'Freqs')])
+}
+
+WSpred <- function(i, s, theta){
+  
+  wAll <- theta[1]
+  wNoth <- theta[2]
+  wLef <- theta[3]
+  wIn <- theta[4]
+  alpha <- theta[5]
+  beta <- theta[6]
+  gamma <- theta[7]
+  
+  aux <- c(wAll, wNoth, wLef, wLef, wLef, wLef, wIn, wIn)
+  # The probability of region 'RS' is 1 - the sum of the other probabilities
+  if (sum(aux) > 1) {
+    print('Oops, incorrect biases')
+    aux <- aux/sum(aux)
+  }
+  bias <- c(1 - sum(aux), aux)
+  
+  # Find the attractivenes:
+  attractiveness <- bias # Start from bias
+  
+  # Add attractiveness to current region according to score
+  if (i != 'RS') {
+    index <- which(regiones == i)
+    attractiveness[index] <- attractiveness[index] + alpha * sigmoid(s, beta, gamma) 
+  }
+  
+  probs <- attractiveness / sum(attractiveness)
+  probs <- replace(probs,probs<lowerEps2,lowerEps2)
+  probs <- replace(probs,probs>highEps2,highEps2)
+  
+  return(probs)
+}
+
+WSprob <- function(i, s, k, theta){
+  
+  probs <- WSpred(i, s, theta)
+  
+  probab <- probs[which(regiones == k)]
+  
+  return(probab)
+}
 
 WSLSpred <- function(i, s, theta){
   
