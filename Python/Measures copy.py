@@ -4,10 +4,11 @@ import FRA
 
 class Measuring :
 
-    def __init__(self, data, Num_Loc, TOLERANCE) :
+    def __init__(self, data, Num_Loc, TOLERANCIA) :
         self.data = data
         self.Num_Loc = 8
-        self.TOLERANCE = TOLERANCE
+        self.TOLERANCIA = TOLERANCIA
+        self.CONTADOR = 0
         self.cols = ['a' + str(i) + str(j) \
         for i in range(1, Num_Loc + 1) \
         for j in range(1, Num_Loc + 1) \
@@ -29,7 +30,7 @@ class Measuring :
         else:
             return x['Score']
 
-    def get_measures(self, measures_list):
+    def get_measures(self, lista):
 
         '''List of measures:
         1: Keep only absent
@@ -49,7 +50,7 @@ class Measuring :
         data['Ac_Score'] = data.sort_values(['Dyad','Player']).groupby('Player')['Score'].cumsum()
         print("Finding the initial lag variables...")
 
-        if '1' in measures_list:
+        if '1' in lista:
             # --------------------------------------------------
             # Keeping only rounds with unicorn absent
             # --------------------------------------------------
@@ -59,6 +60,7 @@ class Measuring :
             data['ScoreLEAD'] = data.groupby(['Dyad', 'Player'])\
                                         ['Score'].transform('shift', -1)
             data = pd.DataFrame(data.groupby('Is_there').get_group('Unicorn_Absent'))
+            # print('List of blocks\n', data[['Round', 'Is_there', 'Score', 'ScoreLEAD']][0:20])
 
         # --------------------------------------------------
         # Obtaining final measures from players' performance
@@ -128,13 +130,13 @@ class Measuring :
         data['DLIndex'] = (data['Total_visited_dyad'] - data['Joint'])/(self.Num_Loc * self.Num_Loc)
         assert(all(data['DLIndex'] >= 0)), str(list(data.loc[data['DLIndex']==0].index))
 
-        if '2' in measures_list:
+        if '2' in lista:
             # --------------------------------------------------
             # Classify region per round, per player
             # --------------------------------------------------
             print("Classifying regions...")
             cols1 = self.cols
-            data['Category'] = data.apply(lambda x: FRA.classify_region(x[cols1], self.TOLERANCE, self.regions), axis=1)
+            data['Category'] = data.apply(lambda x: FRA.classify_region(x[cols1], self.TOLERANCIA), axis=1)
         else:
             print("Trying to obtain classification from simulation...")
             try:
@@ -142,12 +144,12 @@ class Measuring :
             except:
                 print('Data does not seem to come from simulation!')
 
-        if '3' in measures_list:
+        if '3' in lista:
             # --------------------------------------------------
             # Finding distance to closest focal region per round, per player
             # --------------------------------------------------
             print("Finding distances to focal regions (please be patient)...")
-            data['Similarity'] = data.apply(lambda x: FRA.maxSim2Focal(x[self.cols], 8, self.regions), axis=1)
+            data['Similarity'] = data.apply(lambda x: FRA.minDist2Focal(x[self.cols], self.regions), axis=1)
 
         # --------------------------------------------------
         # Finding the lag and lead variables
@@ -157,16 +159,14 @@ class Measuring :
                                     ['Score'].transform('shift', 1)
         data['Consistency_LEAD1'] = data.groupby(['Dyad', 'Player'])\
                                     ['Consistency'].transform('shift', -1)
-        data['Joint_LAG1'] = data.groupby(['Dyad', 'Player'])\
-                                    ['Joint'].transform('shift', 1)
         data['Dif_consist_LAG1'] = data.groupby(['Dyad', 'Player'])\
                                     ['Dif_consist'].transform('shift', 1)
         data['RegionGo'] = data.groupby(['Dyad', 'Player'])\
                                     ['Category'].transform('shift', -1)
-        if '1' in measures_list:
+        if '1' in lista:
             data = data[data['ScoreLEAD'].notna()]
 
-        if '3' in measures_list:
+        if '3' in lista:
             data['Similarity_LAG1'] = data.groupby(['Dyad', 'Player'])\
                                     ['Similarity'].transform('shift', 1)
 
