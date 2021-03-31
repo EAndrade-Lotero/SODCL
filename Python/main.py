@@ -24,7 +24,8 @@ dyads = 50 # number of dyads
 gameParameters = [p, Pl, Num_Loc, rounds, dyads]
 measures = '13'
 TO_FILE = True
-non_shaky_hand = 0.88
+# non_shaky_hand = 0.88
+non_shaky_hand = 1
 
 playerParameters1 =  {'ALL': 0.1} # Bias towards ALL
 playerParameters1['NOTHING'] = 0.1 # Bias towards NOTHING
@@ -33,20 +34,21 @@ playerParameters1['IN-OUT'] = 0.1 # Bias towards IN-OUT
 playerParameters1['alpha'] = 100 # How much the focal region augments attractiveness
 playerParameters1['beta'] = 30 # Amplitude of the WSLS sigmoid function
 playerParameters1['gamma'] = 31 # Position of the WSLS sigmoid function
-playerParameters1['delta'] = 100 # How much the added FRA similarities augments attractiveness
-playerParameters1['epsilon'] = 30 # Amplitude of the FRA sigmoid function
-playerParameters1['zeta'] = 0.7 # Position of the FRA sigmoid function
+playerParameters1['delta'] = 0 # How much the added FRA similarities augments attractiveness
+playerParameters1['epsilon'] = 0 # Amplitude of the FRA sigmoid function
+playerParameters1['zeta'] = 0 # Position of the FRA sigmoid function
 
-playerParameters2 =  {'ALL': 0.1} # Bias towards ALL
-playerParameters2['NOTHING'] = 0.1 # Bias towards NOTHING
-playerParameters2['T-B-L-R'] = 0.1 # Bias towards TOP-BOTTOM-LEFT-RIGHT
-playerParameters2['IN-OUT'] = 0.1 # Bias towards IN-OUT
-playerParameters2['alpha'] = 100 # How much the focal region augments attractiveness
-playerParameters2['beta'] = 30 # Amplitude of the WSLS sigmoid function
-playerParameters2['gamma'] = 31 # Position of the WSLS sigmoid function
-playerParameters2['delta'] = 100 # How much the added FRA similarities augments attractiveness
-playerParameters2['epsilon'] = 30 # Amplitude of the FRA sigmoid function
-playerParameters2['zeta'] = 0.7 # Position of the FRA sigmoid function
+# playerParameters2 =  {'ALL': 0.1} # Bias towards ALL
+# playerParameters2['NOTHING'] = 0.1 # Bias towards NOTHING
+# playerParameters2['T-B-L-R'] = 0.1 # Bias towards TOP-BOTTOM-LEFT-RIGHT
+# playerParameters2['IN-OUT'] = 0.1 # Bias towards IN-OUT
+# playerParameters2['alpha'] = 100 # How much the focal region augments attractiveness
+# playerParameters2['beta'] = 30 # Amplitude of the WSLS sigmoid function
+# playerParameters2['gamma'] = 31 # Position of the WSLS sigmoid function
+# playerParameters2['delta'] = 100 # How much the added FRA similarities augments attractiveness
+# playerParameters2['epsilon'] = 30 # Amplitude of the FRA sigmoid function
+# playerParameters2['zeta'] = 0.7 # Position of the FRA sigmoid function
+playerParameters2 = playerParameters1.copy()
 
 print("****************************")
 print('Starting simulation')
