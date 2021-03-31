@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 data = pd.read_csv("../Data/humans_only_absent.csv", index_col=False)
 
-fig2, axes2 = plt.subplots()
+fig2, axes2 = plt.subplots(figsize=(5.7,1.8))
 
 dyads_LR = ['419-723', '435-261', '469-569', '637-838', '648-175', \
             '656-979', '947-704', '948-444']
@@ -44,9 +44,10 @@ for key, Grp in data.groupby(['Dyad']):
 # print(dict)
 print(converge)
 plt.hist(converge)
-plt.xlabel('Rounds')
-plt.ylabel('Frequency')
+plt.xlabel('Rounds', fontsize=10)
+plt.ylabel('Frequency', fontsize=10)
 plt.xlim([0,60])
-#
+plt.tight_layout()
 # print("Num. successful dyads", contador)
-plt.show()
+# plt.show()
+plt.savefig('histogram.png', dpi=300)
