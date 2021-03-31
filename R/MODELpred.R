@@ -33,7 +33,8 @@ lowerEps2=.0001
 highEps2 =.9999
 
 lower_limits=c(0,0,0,0,0,29,0,0,29,0.5)
-upper_limits=c(0.25,0.25,0.25,0.25,500,30,32,500,30,1)
+upper_limits=c(0.125,0.125,0.125,0.125,500,30,32,500,30,1)
+# upper_limits=c(0.25,0.25,0.25,0.25,500,30,32,500,30,1)
 
 shaky <- 0.88
 
@@ -410,8 +411,8 @@ get_FRASims <- function(df) {
 get_FRASims_list <- function(df) {
   
   aux <- get_FRASims(df)
-  
-  aux$MaxFRASim <- mapply(function(x1,x2,x3,x4,x5,x6,x7,x8) as.list(data.frame(c(x1,x2,x3,x4,x5,x6,x7,x8))),
+
+  aux$FRASims <- mapply(function(x1,x2,x3,x4,x5,x6,x7,x8) as.list(data.frame(c(x1,x2,x3,x4,x5,x6,x7,x8))),
                         aux$FRASimALL, 
                         aux$FRASimNOTHING, 
                         aux$FRASimBOTTOM, 
@@ -960,7 +961,7 @@ searchBestFit_FRA <- function(args, N=1, module="nmkb", contador=0, escribir=TRU
       print(fitFRA$message)
       print(paste("Dev:", fitFRA$value))
       imprimir(fitFRA$par)
-      archivo <- paste("../Data/Confusion/Estimations/FRA_Parameter_fit_", module, "_", contador, ".csv", sep = "")
+      archivo <- paste("../Data/Model-Recovery/FRA_Parameter_fit_", module, "_", contador, ".csv", sep = "")
       df <- data.frame(fitFRA)
       # print(head(df))
       write.csv(df, archivo, row.names = FALSE)
@@ -1425,7 +1426,7 @@ searchBestFit_WSLS <- function(args, N=1, module="nmkb", contador=0, escribir=TR
       print(fitresWSLS$message)
       print(paste("Dev:", fitresWSLS$value))
       imprimir(fitresWSLS$par)
-      archivo <- paste("../Data/Confusion/Estimations/WSLS_Parameter_fit_", module, "_", contador, ".csv", sep = "")
+      archivo <- paste("../Data/Model-Recovery/WSLS_Parameter_fit_", module, "_", contador, ".csv", sep = "")
       df <- data.frame(fitresWSLS)
       # print(head(df))
       write.csv(df, archivo, row.names = FALSE)
@@ -1591,7 +1592,7 @@ searchBestFit_MBiases <- function(args, N=1, module="nmkb", contador=0, escribir
       print(fitresMBiases$message)
       print(paste("Dev:", fitresMBiases$value))
       imprimir(fitresMBiases$par)
-      archivo <- paste("../Data/Confusion/Estimations/MBiases_Parameter_fit_", module, "_", contador, ".csv", sep = "")
+      archivo <- paste("../Data/Model-Recovery/MBiases_Parameter_fit_", module, "_", contador, ".csv", sep = "")
       df <- data.frame(fitresMBiases)
       # print(head(df))
       write.csv(df, archivo, row.names = FALSE)
