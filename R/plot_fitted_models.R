@@ -29,5 +29,5 @@ df4$Region <- df4$Category
 df4$Exp <- "FRA"
 
 p <- plot_behavioral_data_fit1(df1, df2, df3, df4)
-ggsave("ModelComparisonFull.pdf", width=7, height=4, dpi=1200, p)
+ggsave("ModelComparisonFull.png", width=7, height=4, dpi=600, p)
 
