@@ -44,12 +44,12 @@ head(df2)
 ###############################################################################
 # Plot WSLS...
 ###############################################################################
-
-p0 <- plot_FocalTransitions(df1)
-p0 <- plot_ModelTransitions_Focal(thetaWSLS, p0, WSLS_color)
+# 
+# p0 <- plot_FocalTransitions(df1)
+# p0 <- plot_ModelTransitions_Focal(thetaWSLS, p0, WSLS_color)
 # p1 <- plot_ModelTransitions_Focal_FRA(thetaFRA, p1, FRA_color)
 # p1 <- grid.arrange(p1, nrow = 1, right=legend2)
-ggsave("WSLSprobs.pdf", width=2, height=2, dpi=1200, p1)
+# ggsave("WSLSprobs.png", width=2, height=2, dpi=1200, p1)
 
 #######################################
 # Plot FRA probabilities
@@ -88,21 +88,21 @@ p1 <- ggplot(data, aes(X, Y, fill=Prob)) +
         ggtitle("Probability of moving\n from RS to focal") +
         theme_bw()
 
-# Behavioral data
-df3 <- df2[df2['RegionGo']=='Focal',]
-df3 <- df3[df3['Region']!='Focal',]
-head(df3)
-x <- df3$Score
-y <- df3$MaxFRASim
-data <- data.frame(x, y)
-data$Prob <- df3$Freqs
-p2 <- ggplot(data, aes(x, y, fill=Prob)) + 
-        geom_tile() +
-        ylab("Max. FRAsim") +
-        xlab("Score") +
-        xlim(c(0,32)) +
-        ggtitle("Observed frequencies of\n moving from RS to focal") +
-        theme_bw()
+# # Behavioral data
+# df3 <- df2[df2['RegionGo']=='Focal',]
+# df3 <- df3[df3['Region']!='Focal',]
+# head(df3)
+# x <- df3$Score
+# y <- df3$MaxFRASim
+# data <- data.frame(x, y)
+# data$Prob <- df3$Freqs
+# p2 <- ggplot(data, aes(x, y, fill=Prob)) + 
+#         geom_tile() +
+#         ylab("Max. FRAsim") +
+#         xlab("Score") +
+#         xlim(c(0,32)) +
+#         ggtitle("Observed frequencies of\n moving from RS to focal") +
+#         theme_bw()
 
 # Draw re-select Focal
 # Model predictions
@@ -120,25 +120,25 @@ p3 <- ggplot(data, aes(X, Y, fill=Prob)) +
         ggtitle("Probability of focal\n re-selection") +
         theme_bw()
 
-# Behavioral data
-df3 <- df2[df2['RegionGo']=='Focal',]
-df3 <- df3[df3['Region']=='Focal',]
-head(df3)
-x <- df3$Score
-y <- df3$MaxFRASim
-data <- data.frame(x, y)
-data$Prob <- df3$Freqs
-p4 <- ggplot(data, aes(x, y, fill=Prob)) + 
-        geom_tile() +
-        ylab("Max. FRAsim") +
-        xlab("Score") +
-        xlim(c(0,32)) +
-        ggtitle("Observed frequencies\n of focal re-selection") +
-        theme_bw()
+# # Behavioral data
+# df3 <- df2[df2['RegionGo']=='Focal',]
+# df3 <- df3[df3['Region']=='Focal',]
+# head(df3)
+# x <- df3$Score
+# y <- df3$MaxFRASim
+# data <- data.frame(x, y)
+# data$Prob <- df3$Freqs
+# p4 <- ggplot(data, aes(x, y, fill=Prob)) + 
+#         geom_tile() +
+#         ylab("Max. FRAsim") +
+#         xlab("Score") +
+#         xlim(c(0,32)) +
+#         ggtitle("Observed frequencies\n of focal re-selection") +
+#         theme_bw()
 
 g <- grid.arrange(p1, p3, nrow=2)
 # g <- grid.arrange(p1, p2, p3, p4, nrow=2)
-ggsave("FRAprobs.pdf", width=3, height=4.5, dpi=1200, g)
+ggsave("FRAprobs.png", width=3, height=4.5, dpi=600, g)
 
 #################################################
 # 3D surfaces
