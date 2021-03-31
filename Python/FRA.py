@@ -31,7 +31,7 @@ def sigmoid(x, beta, gamma):
 
 def sim_consist(v1, v2):
     '''Returns the similarity based on consistency
-	
+
     v1 and v2 are two 64-bit coded regions'''
     if type(v1) == type(np.nan) or type(v2) == type(np.nan):
         return np.nan
@@ -205,3 +205,30 @@ def maxSim2Focal(r, Num_Loc, regions):
     similarities = [sim_consist(a,r) for a in regions]
     value = np.max(np.array(similarities))
     return(value)
+
+def FRASim(r, joint, focal, Num_Loc):
+    '''Returns FRA similarity
+
+    Input: r, which is a region coded as a vector of 0s and 1s of length 64
+           joint, which is a region coded as a vector of 0s and 1s of length 64
+           focal, which is a focal region coded as a vector of 0s and 1s of length 64
+    Output: number representing FRA similarity'''
+
+    # finding similarity between r and focal
+    sss1 = sim_consist(r, focal)
+    # print('Similarity to Focal Region is:', sss1)
+
+    # finding similarity between Joint and Complement to focal
+	# first check whether focal is ALL (should not add similarity to complement here)
+    aux = [x for x in focal if x == 0]
+    # if (len(aux) == 0) or (len(aux) == Num_Loc*Num_Loc):
+    	# print('Ignore focal regions ALL and NOTHING for similarity to complement')
+    if (len(aux) == 0):
+    	# print('Ignore focal region ALL for similarity to complement')
+    	sss2 = 0
+    else:
+    	kComp = [1 - x for x in focal]
+    	sss2 = sim_consist(joint, kComp)
+    	# print('Similarity to Comp Focal Region is:', sss2)
+
+    return sss1 + sss2
