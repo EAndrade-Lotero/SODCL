@@ -16,10 +16,18 @@ df3$Exp <- as.character("FRA")
 df3$Region <- df3$Category
 
 p <- plot_3set_comparison_WSLS(df1, df2, df3)
-ggsave("3models.pdf", width=5, height=4, dpi=1200, p)
+ggsave("3models.png", width=5, height=4, dpi=600, p)
 
 # Regressing DLIndex w.r.t. Consistency with interaction between Joint(n-1) and Dif_Consist
 # MBiases
+
+df1 <- df1[complete.cases(df1), ]
+df2 <- df2[complete.cases(df2), ]
+df3 <- df3[complete.cases(df3), ]
+
+cor(df1$Consistency, df1$Score_LAG1)
+cor(df2$Consistency, df2$Score_LAG1)
+cor(df3$Consistency, df3$Score_LAG1)
 
 modelMBiases <- lm(DLIndex ~ Consistency + Dif_consist*Joint_LAG1, data = df1)
 summary(modelMBiases) # => Positive interaction is significant
