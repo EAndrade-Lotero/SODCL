@@ -1,5 +1,6 @@
-library(ggplot2)
 library(gridExtra)
+library(sjmisc)
+library(ggplot2)
 
 df1 = read.csv("../Data/humans_only_absent.csv")
 head(df1)
@@ -30,8 +31,8 @@ df <- rbind(DLIRound1, DLIRound60)
 # Density plot
 g2 <- ggplot(df, aes(DLIndex, colour=Exp, group=Exp)) +
   geom_density(size=1) +
-  scale_colour_manual(values = c("Last" = "#E69F00", "First" = "#56B4E9")) +  
-  #  scale_y_continuous(limits = c(0, 5)) + 
+  scale_colour_manual(values = c("Last" = "#E69F00", "First" = "#56B4E9")) +
+  #  scale_y_continuous(limits = c(0, 5)) +
   scale_y_continuous(position = "right") +
   labs(color = "Round") +
   theme_bw() +
@@ -63,7 +64,9 @@ df$Condition <- factor(df$Condition, levels = c('First Round', '60 Rounds'))
 df$Strategy <- lapply(df$Strategy, function(x) {
   if(x=='NOTHING') {
     return('NOTH')
-  } else {
+  } else if(x=='BOTTOM') {
+    return('BOTT')
+  }  else {
     #    print(x)
     return(as.character(x))
   }
@@ -73,7 +76,7 @@ df$Strategy <- as.factor(df$Strategy)
 df$Strategy <- factor(df$Strategy, levels = c('RS',
                                               'ALL', 
                                               'NOTH', 
-                                              'DOWN', 
+                                              'BOTT', 
                                               'TOP', 
                                               'LEFT', 
                                               'RIGHT', 
@@ -86,7 +89,7 @@ p <- ggplot(df, aes(x=Strategy,  group=Condition, fill=Condition)) +
   #                 y= ..prop.. ), stat= "count", vjust = -.5) +
   #  labs(y = "Percent", fill="Region") +
   xlab("Region") +
-  ylab("Trials on which region\n was uncovered (%)") +
+  ylab("Trials on which\n region was\n uncovered (%)") +
   scale_fill_manual(name = "Trials on",
                     values = c("60 Rounds" = "#E69F00", "First Round" = "#56B4E9")) +  
   #  facet_grid(~Condition) +
@@ -96,7 +99,10 @@ p <- ggplot(df, aes(x=Strategy,  group=Condition, fill=Condition)) +
 
 p
 
-grid.arrange(p, g2, 
+# Plot for paper (Fig 4)
+g3 <- grid.arrange(p, g2,
              nrow = 1,
              widths=c(0.7, 0.3))
+
+ggsave("onshot-vs-iterated.png", width=5.7, height=2.5, dpi=600, g3)
 
