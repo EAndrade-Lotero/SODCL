@@ -12,12 +12,12 @@ summary(model4h) # => Positive correlation is significant
 
 g3 <- ggplot(df1, aes(Similarity_LAG1, Consistency)) +
   geom_point(alpha = 1/8) +
+  theme_bw() +
   xlab("Max similarity w.r.t.\nfocal regions on Round n-1") +
   ylab("Consistency on Round n") +
   geom_smooth(method = lm)
 
-g3 <- g3 + theme_sjplot()
 
 g3 
 
-ggsave("ConsistencyWRTDist2FR.pdf", width=2, height=2, dpi=1200, g3)
+ggsave("ConsistencyWRTDist2FR.png", width=2, height=2, dpi=600, g3)
