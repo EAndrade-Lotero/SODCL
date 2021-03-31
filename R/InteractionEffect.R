@@ -28,3 +28,7 @@ g2 <- plot_model(model3h,
 g2
 
 # ggsave("DegreesReactivity.eps", width=4, height=3.5, device=cairo_ps, g2)
+
+# Check whether interaction coefficient changes sign when the effect of consistency is not included
+model3h <- lm(DLIndex ~ Dif_consist*Joint_LAG1, data = df1)
+summary(model3h) # => Positive interaction again (and higher)
