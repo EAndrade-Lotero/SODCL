@@ -155,7 +155,7 @@ class Experiment :
 			place = -1
 			if uniform(0, 1) > p:
 				place = int(floor(uniform(0, Num_Loc * Num_Loc - 1)))
-			
+
 			# Determine players' chosen region
 			chosen_strategies = []
 			for k in range(0, Pl):
@@ -219,7 +219,7 @@ class Experiment :
 			for k in range(0,Pl):
 				Players[k].joint = both
 				Players[k].make_decision(place)
-	
+
 	def shake(self, strategy):
 		if uniform(0, 1) > self.non_shaky_hand:
 			p = 2
@@ -237,7 +237,7 @@ class Experiment :
 			print("Running dyad no. ", d + 1)
 			print("****************************\n")
 			self.run_dyad()
-	
+
 	def round2dataframe(self, Players, round, place, TO_FILE):
 		Num_Loc = self.gameParameters[2]
 		# Create row of data as dictionary
@@ -300,11 +300,14 @@ class Experiment :
 
 		return Players
 
-	def save(self):
-		count = 0
-		file_name = './Data/output' + str(count) + '.csv'
-		while os.path.isfile(file_name):
-			count += 1
+	def save(self, where=''):
+		if where == '':
+			count = 0
 			file_name = './Data/output' + str(count) + '.csv'
+			while os.path.isfile(file_name):
+				count += 1
+				file_name = './Data/output' + str(count) + '.csv'
+		else:
+			file_name = where
 		self.df.to_csv(file_name, index=False)
 		print('Data saved to ' + file_name)
