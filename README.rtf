@@ -1,105 +1,84 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2578
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red49\green55\blue59;
-\red24\green108\blue198;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000;\cssrgb\c25098\c27843\c29804;
-\cssrgb\c9804\c50980\c81961;}
-\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf2 Seeking the unicorn dataset\
-Principal Investigator / Contact person: Edgar J. Andrade-Lotero, Universidad del Rosario, Bogot\'e1, Colombia,  edgar.andrade@urosario.edu.co\
-\
-In collaboration with: Robert L. Goldstone, Indiana University, Bloomington, Indiana, USA, rgoldsto@indiana.edu\
-\
-Publications using these data: \
-[1] Andrade-Lotero, E., & Goldstone, R. L. (2019).  Self-Organized Division of Cognitive Labor.  Proceedings of the 41st Annual Conference of the Cognitive Science Society. (pp. 91-97). Montreal, Canada: Cognitive Science Society. \cb3 \expnd0\expndtw0\kerning0
-https://cogsci.mindmodeling.org/2019/papers/0038/index.html\
-\
-[2] Andrade-Lotero, E., & Goldstone, R. L. (2021).  Self-Organized Division of Cognitive Labor. To appear in PLOS ONE.\
-\
-Datasets described here:\
-\
-- performances.csv\
-- humans_only_absent.csv\
-\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \cb1 =======================\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \kerning1\expnd0\expndtw0 Filename: performances.csv\
-\
-Location: https://github.com/EAndrade-Lotero/SODCL/blob/master/Data/performances.csv\
-\
-Behavioral data of 45 dyads playing the \'93Seek the unicorn\'94 experiment (see {\field{\*\fldinst{HYPERLINK "https://dx.doi.org/10.17504/protocols.io.bts9nnh6"}}{\fldrslt \cb3 \expnd0\expndtw0\kerning0
-https://www.protocols.io/view/seeking-the-unicorn-bts9nnh6}}\cb3 \expnd0\expndtw0\kerning0
-)\cb1 \kerning1\expnd0\expndtw0 . Data was obtained from raw json files output from nodegame.\
-\
-\cb3 \expnd0\expndtw0\kerning0
-Method of data collection: nodeGame platform. Freely available at: \cb1 https://github.com/Slendercoder/Seeking_the_unicorn \
-Methods of data processing: Dataset generated from raw data via two scripts:\
-- Creating a single csv from multiple json output from nodeGame.\
-\
-Number of variables: 138\
-Number of rows: 5400\
-Variables:\
-* Dyad: name of dyad, which comes from the participants number which nodegame gives to each player \
-* Round: number of round of the experiment\
-* Player: name of player, which comes from the name of dyad and whether the player is player 1 or 2.\
-* Answer: submitted answer during round, could be either \'93Absent\'94 or \'93Present\'94.\
-* Time: number of milliseconds from start to finish of the round.\
-* a11 to a88: whether the tile was visited (1) or not (0). For example, if a34=1, tile on third row fourth column was visited during round.\
-* b11 to b88: order on which the tile was visited. For example, if b34=5, tile on third row fourth column was the fourth tile to be visited during round.\
-* Score: score of the round.\
-* Joint: number of overlapping tiles, that is, tiles visited by both players during round.\
-* Is_there: whether there was or not a unicorn during round.\
-* where_x: column where unicorn was placed, or -1 if unicorn absent.\
-* where_y: row where unicorn was placed, or -1 if unicorn absent.\
-\
-=======================\
-\
-\kerning1\expnd0\expndtw0 Filename: humans_only_absent.csv\
-\
-Location: https://github.com/EAndrade-Lotero/SODCL/blob/master/Data/humans_only_absent.csv\
-\
-Behavioral data keeping only rounds with unicorn absent and with additional measures (accumulated score, consistency, difference in consistency between players, DLindex, maximum similarity to focal region, best fit focal region) of 45 dyads playing the \'93Seek the unicorn\'94 experiment (https://www.protocols.io/view/seeking-the-unicorn-bts9nnh6). \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \cb3 \expnd0\expndtw0\kerning0
-\
-Method of data collection: Processing of performances.csv.\
-\
-Methods of data processing: Dataset generated from `performances.csv` via a python script to obtain measures described in [2].\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \cb1 \
-Number of variables: 154\
-\
-Number of rows: 1244\
-\
-Variables:\
-\
-* Dyad: name of dyad, which comes from the participants number which nodegame gives to each player \
-* Round: number of round of the experiment\
-* Player: name of player, which comes from the name of dyad and whether the player is player 1 or 2.\
-* Answer: submitted answer during round, could be either \'93Absent\'94 or \'93Present\'94.\
-* Time: number of milliseconds from start to finish of the round.\
-* a11 to a88: whether the tile was visited (1) or not (0). For example, if a34=1, tile on third row fourth column was visited during round.\
-* b11 to b88: order on which the tile was visited. For example, if b34=5, tile on third row fourth column was the fourth tile to be visited during round.\
-* Score: score of the round.\
-* Joint: number of overlapping tiles, that is, tiles visited by both players during round.\
-* Is_there: whether there was or not a unicorn during round.\
-* where_x: column where unicorn was placed, or -1 if unicorn absent.\
-* where_y: row where unicorn was placed, or -1 if unicorn absent.\
-* Ac_Score: accumulated score up until round.\
-* ScoreLEAD: score from next round.\
-* Size_visited: number of tiles the player visited during round.\
-* Consistency: Overlapping uncovered tiles from Round $n\{-\}1$ to Round $n$ / Tiles uncovered in either of the two rounds.\
-* Total_visited_dyad: total number of tiles visited by both players during round.\
-* Dif_consist: difference between players' consistency during round.\
-* DLIndex: (Tiles uncovered by one footnotesize or both of the players -  Overlapping tiles) / Tiles in the grid.\
-* Category: best fitting focal region for visited tiles during round based on maximum similarity.\
-* Similarity: maximum similarity between visited tiles during round and the focal regions, based on $\\mbox\{sim\}(a, b) =$ Number of tiles in both $a$ and $b$ / Number of tiles in $a$ or $b$.\
-* Score_LAG1: Score from previous round.\
-* Consistency_LEAD1: Consistency from next round.\
-* Joint_LAG1: number of overlapping tiles, that is, tiles visited by both players during previous round.\
-* Dif_consist_LAG1: difference between players' consistency during previous round.\
-* RegionGo: best fitting focal region for visited tiles on next round.\
-* Similarity_LAG1: maximum similarity between visited tiles on next round.}
+Seeking the unicorn dataset
+Principal Investigator / Contact person: Edgar J. Andrade-Lotero, Universidad del Rosario, Bogot\'e1, Colombia,  edgar.andrade@urosario.edu.co
+In collaboration with: Robert L. Goldstone, Indiana University, Bloomington, Indiana, USA, rgoldsto@indiana.edu
+
+Publications using these data:
+[1] Andrade-Lotero, E., & Goldstone, R. L. (2019).  Self-Organized Division of Cognitive Labor.  Proceedings of the 41st Annual Conference of the Cognitive Science Society. (pp. 91-97). Montreal, Canada: Cognitive Science Society. (https://cogsci.mindmodeling.org/2019/papers/0038/index.html)
+
+[2] Andrade-Lotero, E., & Goldstone, R. L. (2021).  Self-Organized Division of Cognitive Labor. To appear in PLOS ONE.
+
+Datasets described here:
+- performances.csv
+- humans_only_absent.csv
+
+=======================
+
+Filename: performances.csv
+
+Location: https://github.com/EAndrade-Lotero/SODCL/blob/master/Data/performances.csv
+
+Behavioral data of 45 dyads playing the "Seek the unicorn experiment" (see https://www.protocols.io/view/seeking-the-unicorn-bts9nnh6). Data was obtained from raw json files output from nodegame.
+
+Method of data collection: nodeGame platform. Freely available at: https://github.com/Slendercoder/Seeking_the_unicorn
+
+Methods of data processing: Dataset generated from raw data via a python script to create a single csv from multiple json output from nodeGame.
+
+Number of variables: 138
+Number of rows: 5400
+Variables:
+* Dyad: name of dyad, which comes from the participants number which nodegame gives to each player.
+* Round: number of round of the experiment.
+* Player: name of player, which comes from the name of dyad and whether the player is player 1 or 2.
+* Answer: submitted answer during round, could be either "Absent" or "Present".
+* Time: number of milliseconds from start to finish of the round.
+* a11 to a88: whether the tile was visited (1) or not (0). For example, if a34=1, tile on third row fourth column was visited during round.
+* b11 to b88: order on which the tile was visited. For example, if b34=5, tile on third row fourth column was the fourth tile to be visited during round.
+* Score: score of the round.
+* Joint: number of overlapping tiles, that is, tiles visited by both players during round.
+* Is_there: whether there was or not a unicorn during round.
+* where_x: column where unicorn was placed, or -1 if unicorn absent.
+* where_y: row where unicorn was placed, or -1 if unicorn absent.
+
+=======================
+
+Filename: humans_only_absent.csv
+
+Location: https://github.com/EAndrade-Lotero/SODCL/blob/master/Data/humans_only_absent.csv
+
+Behavioral data keeping only rounds with unicorn absent and with additional measures (accumulated score, consistency, difference in consistency between players, DLindex, maximum similarity to focal region, best fit focal region) of 45 dyads playing the \'93Seek the unicorn\'94 experiment (https://www.protocols.io/view/seeking-the-unicorn-bts9nnh6).
+
+Method of data collection: Processing of performances.csv.
+
+Methods of data processing: Dataset generated from `performances.csv` via a python script to obtain measures described in [2].
+
+Number of variables: 154
+Number of rows: 1244
+Variables:
+* Dyad: name of dyad, which comes from the participants number which nodegame gives to each player.
+* Round: number of round of the experiment.
+* Player: name of player, which comes from the name of dyad and whether the player is player 1 or 2.
+* Answer: submitted answer during round, could be either "Absent" or "Present".
+* Time: number of milliseconds from start to finish of the round.
+* a11 to a88: whether the tile was visited (1) or not (0). For example, if a34=1, tile on third row fourth column was visited during round.
+* b11 to b88: order on which the tile was visited. For example, if b34=5, tile on third row fourth column was the fourth tile to be visited during round.
+* Score: score of the round.
+* Joint: number of overlapping tiles, that is, tiles visited by both players during round.
+* Is_there: whether there was or not a unicorn during round.
+* where_x: column where unicorn was placed, or -1 if unicorn absent.
+* where_y: row where unicorn was placed, or -1 if unicorn absent.
+* Ac_Score: accumulated score up until round.
+* ScoreLEAD: score from next round.
+* Size_visited: number of tiles the player visited during round.
+* Consistency: Overlapping uncovered tiles from Round n-1 to Round n / Tiles uncovered in either of the two rounds.
+* Total_visited_dyad: total number of tiles visited by both players during round.
+* Dif_consist: difference between players' consistency during round.
+* DLIndex: (Tiles uncovered by one footnotesize or both of the players -  Overlapping tiles) / Tiles in the grid.
+* Category: best fitting focal region for visited tiles during round based on maximum similarity.
+* Similarity: maximum similarity between visited tiles during round and the focal regions, based on sim(a, b) = Number of tiles in both a and b / Number of tiles in a or b.
+* Score_LAG1: Score from previous round.
+* Consistency_LEAD1: Consistency from next round.
+* Joint_LAG1: number of overlapping tiles, that is, tiles visited by both players during previous round.
+* Dif_consist_LAG1: difference between players' consistency during previous round.
+* RegionGo: best fitting focal region for visited tiles on next round.
+* Similarity_LAG1: maximum similarity between visited tiles on next round.
