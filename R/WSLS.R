@@ -24,3 +24,34 @@ g1 <- ggplot(df1, aes(Score_LAG1, Consistency)) +
 g1
 
 ggsave("ConsistencyWRTScore.png", width=2, height=2, dpi=600, g1)
+
+
+# Running an Ordinal Logistic Regression
+
+## Cutting the Consistency variable into three levels
+summary(df1$Consistency)
+df1$Consistency_ordinal <- cut(df1$Consistency, 
+                               breaks = c(0, 0.31, 0.86, 1),
+                               labels = c("inconsistent", "moderately consistent", "consistent")
+                               )
+
+## Drawing boxplot
+boxplot(df1$Score_LAG1~df1$Consistency_ordinal,
+        xlab="Consistency",
+        ylab="Score on previous round"
+        )
+
+## Running OLR model
+m <- polr(Consistency_ordinal ~ Score_LAG1, data = df1)
+summary(m)
+
+## store table
+(ctable <- coef(summary(m)))
+## calculate and store p values
+p <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
+## combined table
+(ctable <- cbind(ctable, "p value" = p))
+
+## Finding odds
+(ci <- confint(m))
+exp(cbind(coef(m),t(ci)))
