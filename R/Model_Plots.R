@@ -1149,16 +1149,29 @@ plot_3set_comparison_WSLS <- function(df1, df2, df3) {
   
   # 2...
   # Consistency(n) ~ Score(n-1)
-  g2 <- ggplot(df, aes(x = Score, y = Consistency_LEAD1, color=Exp)) +
-    geom_point(alpha = 1/8) +
-    scale_colour_manual(values = c(colordf1,colordf2,colordf3)) +  
-    xlab("Score(n-1)") +
-    ylab("Consistency(n)") +
-    xlim(c(min_score,max_score)) +
-    ylim(c(0,1)) +
-    geom_smooth(method = lm) + 
-    theme_bw() +
-    theme(legend.position="bottom")
+  df$ScoreLAG_ordinal <- cut(df$Score_LAG1, 
+                              breaks = c(-200, 15, 28, 32),
+                              labels = c("low", "moderate", "high")
+  )
+  df <- df[complete.cases(df), ]
+  g2 <- ggplot(df, aes(x=ScoreLAG_ordinal, y=Consistency, fill=Exp)) + 
+    geom_boxplot(notch=FALSE) +
+    scale_fill_manual(name = "Model",
+                      values = c(colordf1,colordf2,colordf3)) +  
+    labs(x="Score on previous round", y = "Consistency") +
+    theme_bw()
+  g2
+  
+    # g2 <- ggplot(df, aes(x = ScoreLAG_ordinal, y = Consistency, color=Exp)) +
+  #   geom_point(alpha = 1/8) +
+  #   scale_colour_manual(values = c(colordf1,colordf2,colordf3)) +  
+  #   xlab("Score(n-1)") +
+  #   ylab("Consistency(n)") +
+  #   xlim(c(min_score,max_score)) +
+  #   ylim(c(0,1)) +
+  #   geom_smooth(method = lm) + 
+  #   theme_bw() +
+  #   theme(legend.position="bottom")
   
   # 3...
   # Consistency(n) ~ Max similarity to focal region
