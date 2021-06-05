@@ -20,4 +20,4 @@ g3 <- ggplot(df1, aes(Similarity_LAG1, Consistency)) +
 
 g3 
 
-ggsave("ConsistencyWRTDist2FR.png", width=2, height=2, dpi=600, g3)
+ggsave("ConsistencyWRTDist2FR.png", width=2.5, height=2, dpi=600, g3)
