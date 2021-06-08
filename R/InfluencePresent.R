@@ -25,10 +25,15 @@ df_absent <- df_absent[which(df_absent$df1.Is_there == 'Unicorn_Absent'), ]
 df_absent$Exp <- "absent"
 
 av_present <- mean(df_present$df1.Size_visited)
-av_absent <- mean(df_absent$df1.Size_visited)
-
+av_present_sd <- sd(df_present$df1.Size_visited)
 av_present
+av_present_sd
+
+av_absent <- mean(df_absent$df1.Size_visited)
+av_absent_sd <- sd(df_absent$df1.Size_visited)
 av_absent
+av_absent_sd
+
 wilcox.test(df_present$df1.Size_visited, df_absent$df1.Size_visited) # => Difference size visited after present vs after absent is significant
 
 df2 <- rbind(df_present, df_absent)
