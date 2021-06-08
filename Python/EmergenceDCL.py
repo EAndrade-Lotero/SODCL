@@ -303,10 +303,10 @@ class Experiment :
 	def save(self, where=''):
 		if where == '':
 			count = 0
-			file_name = './Data/output' + str(count) + '.csv'
+			file_name = '../Data/output' + str(count) + '.csv'
 			while os.path.isfile(file_name):
 				count += 1
-				file_name = './Data/output' + str(count) + '.csv'
+				file_name = '../Data/output' + str(count) + '.csv'
 		else:
 			file_name = where
 		self.df.to_csv(file_name, index=False)
