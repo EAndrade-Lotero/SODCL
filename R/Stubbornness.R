@@ -10,6 +10,8 @@ df1 <- df1[complete.cases(df1), ]
 model4h <- lm(Consistency ~ Similarity_LAG1, data = df1)
 summary(model4h) # => Positive correlation is significant
 
+length(df1$Consistency)
+
 g3 <- ggplot(df1, aes(Similarity_LAG1, Consistency)) +
   geom_point(alpha = 1/8) +
   theme_bw() +
