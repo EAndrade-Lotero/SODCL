@@ -20,11 +20,10 @@ p = 0.5 # probability of there being an unicorn
 Pl = 2 # number of players
 Num_Loc = 8 # number of rows/columns in grid
 rounds = 60 # number of rounds
-dyads = 50 # number of dyads
+dyads = 150 # number of dyads
 gameParameters = [p, Pl, Num_Loc, rounds, dyads]
 measures = '13'
 TO_FILE = True
-# non_shaky_hand = 0.88
 non_shaky_hand = 1
 
 playerParameters1 =  {'ALL': 0.1} # Bias towards ALL
@@ -34,9 +33,9 @@ playerParameters1['IN-OUT'] = 0.1 # Bias towards IN-OUT
 playerParameters1['alpha'] = 100 # How much the focal region augments attractiveness
 playerParameters1['beta'] = 30 # Amplitude of the WSLS sigmoid function
 playerParameters1['gamma'] = 31 # Position of the WSLS sigmoid function
-playerParameters1['delta'] = 0 # How much the added FRA similarities augments attractiveness
-playerParameters1['epsilon'] = 0 # Amplitude of the FRA sigmoid function
-playerParameters1['zeta'] = 0 # Position of the FRA sigmoid function
+playerParameters1['delta'] = 2 # How much the added FRA similarities augments attractiveness
+playerParameters1['epsilon'] = 30 # Amplitude of the FRA sigmoid function
+playerParameters1['zeta'] = 0.8 # Position of the FRA sigmoid function
 
 # playerParameters2 =  {'ALL': 0.1} # Bias towards ALL
 # playerParameters2['NOTHING'] = 0.1 # Bias towards NOTHING
