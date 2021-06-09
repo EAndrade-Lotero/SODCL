@@ -34,7 +34,7 @@ av_absent_sd <- sd(df_absent$df1.Size_visited)
 av_absent
 av_absent_sd
 
-wilcox.test(df_present$df1.Size_visited, df_absent$df1.Size_visited) # => Difference size visited after present vs after absent is significant
+t.test(df_present$df1.Size_visited, df_absent$df1.Size_visited) # => Difference size visited after present vs after absent is significant
 
 df2 <- rbind(df_present, df_absent)
 head(df2)
