@@ -18,7 +18,7 @@ mean(DLIRound1)
 sd(DLIRound1)
 n <- length(DLIRound1)
 print(paste("Number of trials first round:", n))
-wilcox.test(DLIRound60, DLIRound1) # => Difference one-shot task vs iterated task is significant
+t.test(DLIRound60, DLIRound1) # => Difference one-shot task vs iterated task is significant
 
 DLIRound60 <- data.frame(DLIRound60)
 names(DLIRound60)[1] <- "DLIndex"
