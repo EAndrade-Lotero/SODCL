@@ -96,5 +96,3 @@ p <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
 (ci <- confint(m))
 exp(cbind(coef(m),t(ci)))
 
-newdat <- data.frame(pared=c(0,1))
-(phat <- predict(object = m, newdat, type="p"))
